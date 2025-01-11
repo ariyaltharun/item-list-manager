@@ -12,11 +12,20 @@ function App() {
     }
   }
   
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      if (ref.current.value !== "") {
+        setItems([...items, ref.current.value]);
+        ref.current.value = "";
+      }
+    }
+  }
+
   return (
     <div className='outer'>
       <div className='inner'>
         <h1>Item Lists</h1>
-        <input type="text" ref={ref} />
+        <input type="text" ref={ref} onKeyDown={handleKeyDown}/>
         {items.length > 0 && items?.map((item, idx) => (
           <ul key={idx}> {item} </ul>
         ))}
