@@ -1,34 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useRef, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [items, setItems] = useState([])
+  const ref = useRef(null);
 
+  const handleClick = (e) => {
+    if (ref.current.value !== "") {
+      setItems([...items, ref.current.value]);
+      ref.current.value = "";
+    }
+  }
+  
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='outer'>
+      <div className='inner'>
+        <h1>Item Lists</h1>
+        <input type="text" ref={ref} />
+        {items.length > 0 && items?.map((item, idx) => (
+          <ul key={idx}> {item} </ul>
+        ))}
+        <button onClick={handleClick}>Add Item</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
